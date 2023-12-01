@@ -125,13 +125,13 @@ export function apiReq(api: AxiosInstance) {
 /**
  * 文件下载
  *
- * @param   {[any]}  res  接口回调
- *
- * @return  {[type]}       [return description]
+ * @param   {[AnyObject]}  res  接口回调
+ * @param   {string}     fileNameKey  下载文件键名
  */
-export function $downloadFile(res: AnyObject) {
+export function $downloadFile(res: AnyObject, fileNameKey?: string) {
   const { data, headers } = res || {};
   const isError = !data;
+  const key = fileNameKey ?? "filename=";
 
   if (isError) throw res;
 
@@ -143,8 +143,8 @@ export function $downloadFile(res: AnyObject) {
     .find((v: AnyObject) => v.includes("application"));
   const fileName = contDesc
     ?.split(";")
-    .find((v: AnyObject) => v.includes("filename="))
-    ?.replace("filename=", "");
+    .find((v: AnyObject) => v.includes(key))
+    ?.replace(key, "");
 
   const decodeName = fileName ? decodeURIComponent(fileName) : "附件";
 
