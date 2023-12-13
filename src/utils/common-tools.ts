@@ -1,15 +1,15 @@
-import { MessageBox, Message } from "element-ui";
+import { MessageBox, Message } from 'element-ui'
 
 interface AnyObject {
-  [key: string]: any;
+  [key: string]: any
 }
 
 interface AxiosInstance {
-  <T = any>(...value: T[]): Promise<T>;
+  <T = any>(...value: T[]): Promise<T>
 }
 
 export function random(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 /**
@@ -22,16 +22,15 @@ export function random(min: number, max: number): number {
  */
 export function getValue(fn: () => any, defaultValue?: any) {
   try {
-    const result = fn();
-    const nullish = [null, undefined];
+    const result = fn()
+    const nullish = [null, undefined]
 
-    if (!result && nullish.includes(result))
-      throw new Error(`get fn() error: ${result}`);
+    if (!result && nullish.includes(result)) throw new Error(`get fn() error: ${result}`)
 
-    return result;
+    return result
   } catch (error) {
     // console.warn('get value error:', error)
-    return defaultValue;
+    return defaultValue
   }
 }
 
@@ -42,12 +41,12 @@ export function getValue(fn: () => any, defaultValue?: any) {
  * @return {Any}
  */
 export function chainAccess(result: AnyObject, path: string) {
-  const aPath = path.split(".");
-  let newRes = result?.[aPath?.shift?.() || ""];
+  const aPath = path.split('.')
+  let newRes = result?.[aPath?.shift?.() || '']
 
-  if (aPath.length && newRes) newRes = chainAccess(newRes, aPath.join("."));
+  if (aPath.length && newRes) newRes = chainAccess(newRes, aPath.join('.'))
 
-  return newRes;
+  return newRes
 }
 
 /**
@@ -56,12 +55,12 @@ export function chainAccess(result: AnyObject, path: string) {
  * @return  {[Function]}     [return 防抖加工后的新方法]
  */
 export function joinDebounce() {
-  let timer: NodeJS.Timeout;
+  let timer: NodeJS.Timeout
 
   return (func: () => any, ms = 500) => {
-    clearTimeout(timer);
-    timer = setTimeout(func, ms);
-  };
+    clearTimeout(timer)
+    timer = setTimeout(func, ms)
+  }
 }
 
 /**
@@ -72,9 +71,9 @@ export function joinDebounce() {
  * @return  {[Promise]}        [return description]
  */
 export function genrateParallels(apis: any[]) {
-  const parallels = apis.map((api) => (async () => await api)());
+  const parallels = apis.map(api => (async () => await api)())
 
-  return parallels;
+  return parallels
 }
 
 /**
@@ -82,30 +81,27 @@ export function genrateParallels(apis: any[]) {
  * @param {Object} res  [resolve参数]
  */
 export function $thenBack(res: AnyObject) {
-  const data = res?.data;
+  const data = res?.data
   // const isError = !data;
-  const isError = data?.code !== 0;
+  const isError = data?.code !== 0
 
-  if (isError) throw data;
+  if (isError) throw data
 
-  return data;
+  return data
 }
 
 /**
  * API catch回调处理
  * @param {String} errPrefix  [自定义错误前缀]
  */
-export function $catchBack(errPrefix = "") {
+export function $catchBack(errPrefix = '') {
   return function (err: AnyObject) {
-    const [backData, errorMsg] = [
-      { ...err },
-      errPrefix + (err?.msg || err?.errorMsg || err?.message || ""),
-    ];
+    const [backData, errorMsg] = [{ ...err }, errPrefix + (err?.errorMsg || err?.msg || err?.message || '')]
 
-    Message.error(errorMsg);
+    Message.error(errorMsg)
 
-    return backData;
-  };
+    return backData
+  }
 }
 
 /**
@@ -119,7 +115,7 @@ export function apiReq(api: AxiosInstance) {
   return (...params: any[]) =>
     api(...(params ?? []))
       .then($thenBack)
-      .catch($catchBack());
+      .catch($catchBack())
 }
 
 /**
@@ -129,37 +125,31 @@ export function apiReq(api: AxiosInstance) {
  * @param   {string}     fileNameKey  下载文件键名
  */
 export function $downloadFile(res: AnyObject, fileNameKey?: string) {
-  const { data, headers } = res || {};
-  const isError = !data;
-  const key = fileNameKey ?? "filename=";
+  const { data, headers } = res || {}
+  const isError = !data
+  const key = fileNameKey ?? 'filename='
 
-  if (isError) throw res;
+  if (isError) throw res
 
-  const { "content-disposition": contDesc, "content-type": contType } =
-    headers || {};
+  const { 'content-disposition': contDesc, 'content-type': contType } = headers || {}
 
-  const type = contType
-    ?.split(";")
-    .find((v: AnyObject) => v.includes("application"));
+  const type = contType?.split(';').find((v: AnyObject) => v.includes('application'))
   const fileName = contDesc
-    ?.split(";")
+    ?.split(';')
     .find((v: AnyObject) => v.includes(key))
-    ?.replace(key, "");
+    ?.replace(key, '')
 
-  const decodeName = fileName ? decodeURIComponent(fileName) : "附件";
+  const decodeName = fileName ? decodeURIComponent(fileName) : '附件'
 
-  const [blob, eLink] = [
-    new Blob([data], { type }),
-    document.createElement("a"),
-  ];
+  const [blob, eLink] = [new Blob([data], { type }), document.createElement('a')]
 
-  eLink.download = decodeName;
-  eLink.style.display = "none";
-  eLink.href = URL.createObjectURL(blob);
-  document.body.appendChild(eLink);
-  eLink.click();
-  URL.revokeObjectURL(eLink.href);
-  document.body.removeChild(eLink);
+  eLink.download = decodeName
+  eLink.style.display = 'none'
+  eLink.href = URL.createObjectURL(blob)
+  document.body.appendChild(eLink)
+  eLink.click()
+  URL.revokeObjectURL(eLink.href)
+  document.body.removeChild(eLink)
 }
 
 /**
@@ -171,7 +161,7 @@ export function $downloadFile(res: AnyObject, fileNameKey?: string) {
  */
 export function itemFiledsMap(fieldsMap: AnyObject) {
   return function (item = {}) {
-    const formatItem = {};
+    const formatItem = {}
 
     Object.entries(fieldsMap).forEach(([key, path]) => {
       Object.defineProperty(formatItem, key, {
@@ -179,12 +169,12 @@ export function itemFiledsMap(fieldsMap: AnyObject) {
         writable: true,
         enumerable: true,
         configurable: true,
-      });
+      })
       // formatItem[key] = chainAccess(item, path);
-    });
+    })
 
-    return formatItem;
-  };
+    return formatItem
+  }
 }
 
 /**
@@ -192,13 +182,36 @@ export function itemFiledsMap(fieldsMap: AnyObject) {
  * @param {String} tip  [确认提示语]
  * @param {Function} thenBack  [确认后执行回调]
  */
-export async function $confirmReq(tip = "", thenBack = (res?: any) => null) {
-  await MessageBox.confirm(tip, "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
+export async function $confirmReq(tip = '', thenBack = (res?: any) => null) {
+  await MessageBox.confirm(tip, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
   }).then((res?: any) => {
-    setTimeout(() => thenBack(res), 300); // 避免遮罩层关闭时与下一个弹窗开启冲突
-  });
+    setTimeout(() => thenBack(res), 300) // 避免遮罩层关闭时与下一个弹窗开启冲突
+  })
+}
+
+/**
+ * 文件异常检测
+ *
+ * @param   {[type]}  fileBlob  [fileBlob description]
+ *
+ * @return  {[Boolean]}        是否异常
+ */
+export async function checkFileCatch(fileBlob = new Blob()) {
+  // const { $catchBack } = this;
+  const text = await fileBlob?.text?.()
+  let isError = false
+
+  try {
+    const fileInfo = JSON.parse(text ?? null) ?? {}
+    isError = fileInfo.code !== 0
+    $catchBack()(fileInfo)
+  } catch (err) {
+    console.log('JSON 无法解析', err)
+  }
+
+  return isError
 }
 
 /**
@@ -206,4 +219,4 @@ export async function $confirmReq(tip = "", thenBack = (res?: any) => null) {
  *
  * @var {[type]}
  */
-export const apiTools = { apiReq, $thenBack, $catchBack, $downloadFile };
+export const apiTools = { apiReq, $thenBack, $catchBack, $downloadFile }

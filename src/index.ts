@@ -1,1 +1,1 @@
-export { default as CommonTable } from "./CommonTable/index.vue";
+export { CommonTable, CommonDescriptions } from './components'
