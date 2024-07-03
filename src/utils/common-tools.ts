@@ -107,15 +107,14 @@ export function $catchBack(errPrefix = '') {
 /**
  * 接口请求封装
  *
- * @param   {[Promise]}  api  [接口]
- *
- * @return  {[Promise]}       [回调处理后的新接口]
+ * @param {T} api [接口]
+ * @returns {args<T><ReturnType><T> | undefined} return description
  */
-export function apiReq(api: AxiosInstance) {
+export function apiReq<T extends (...args: any[]) => any>(api: T): (...args: Parameters<T>) => ReturnType<T> {
   return (...params: any[]) =>
     api(...(params ?? []))
       .then($thenBack)
-      .catch($catchBack())
+      .catch($catchBack());
 }
 
 /**
