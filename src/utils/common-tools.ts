@@ -8,6 +8,14 @@ interface AxiosInstance {
   <T = any>(...value: T[]): Promise<T>
 }
 
+type Task = () => Promise<any>
+
+interface TaskItem {
+  task: Task
+  resolve: (value?: any) => void
+  reject: (value?: any) => void
+}
+
 export function random(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
@@ -211,6 +219,43 @@ export async function checkFileCatch(fileBlob = new Blob()) {
   }
 
   return isError
+}
+
+/**
+ * 并发管理
+ */
+export class ConcurrencyManager {
+  #actives: number = 0
+  #maxConcurrent: number = 0
+  #queue: Array<TaskItem> = []
+
+  constructor(max = 5) {
+    this.#maxConcurrent = max
+  }
+
+  dequeue(task: Task) {
+    return new Promise((resolve, reject) => {
+      this.#queue.push({ task, resolve, reject })
+
+      this.#enqueue()
+    })
+  }
+
+  #enqueue() {
+    if (this.#actives < this.#maxConcurrent && this.#queue.length > 0) {
+      const { task, resolve, reject } = this.#queue.shift() as TaskItem
+
+      this.#actives++
+
+      task()
+        .then(resolve)
+        .catch(reject)
+        .finally(() => {
+          this.#actives--
+          this.#enqueue()
+        })
+    }
+  }
 }
 
 /**
