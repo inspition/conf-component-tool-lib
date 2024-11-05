@@ -73,7 +73,7 @@ const dynamicPagintion = computed(() => {
   return {
     'page-size': calcPageSize.value,
     'current-page': page,
-    'page-count': pageSize,
+    'page-size': pageSize,
     'page-sizes': [5, 10, 20],
     total: total,
     // layout: 'total, prev, sizes, pager, next',
