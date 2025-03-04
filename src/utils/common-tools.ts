@@ -33,7 +33,8 @@ export function getValue(fn: () => any, defaultValue?: any) {
     const result = fn()
     const nullish = [null, undefined]
 
-    if (!result && nullish.includes(result)) throw new Error(`get fn() error: ${result}`)
+    if (!result && nullish.includes(result))
+      throw new Error(`get fn() error: ${result}`)
 
     return result
   } catch (error) {
@@ -104,7 +105,10 @@ export function $thenBack(res: AnyObject) {
  */
 export function $catchBack(errPrefix = '') {
   return function (err: AnyObject) {
-    const [backData, errorMsg] = [{ ...err }, errPrefix + (err?.errorMsg || err?.msg || err?.message || '')]
+    const [backData, errorMsg] = [
+      { ...err },
+      errPrefix + (err?.errorMsg || err?.msg || err?.message || ''),
+    ]
 
     Message.error(errorMsg)
 
@@ -118,11 +122,13 @@ export function $catchBack(errPrefix = '') {
  * @param {T} api [接口]
  * @returns {args<T><ReturnType><T> | undefined} return description
  */
-export function apiReq<T extends (...args: any[]) => any>(api: T): (...args: Parameters<T>) => ReturnType<T> {
+export function apiReq<T extends (...args: any[]) => any>(
+  api: T
+): (...args: Parameters<T>) => ReturnType<T> {
   return (...params: any[]) =>
     api(...(params ?? []))
       .then($thenBack)
-      .catch($catchBack());
+      .catch($catchBack())
 }
 
 /**
@@ -138,9 +144,12 @@ export function $downloadFile(res: AnyObject, fileNameKey?: string) {
 
   if (isError) throw res
 
-  const { 'content-disposition': contDesc, 'content-type': contType } = headers || {}
+  const { 'content-disposition': contDesc, 'content-type': contType } =
+    headers || {}
 
-  const type = contType?.split(';').find((v: AnyObject) => v.includes('application'))
+  const type = contType
+    ?.split(';')
+    .find((v: AnyObject) => v.includes('application'))
   const fileName = contDesc
     ?.split(';')
     .find((v: AnyObject) => v.includes(key))
@@ -148,7 +157,10 @@ export function $downloadFile(res: AnyObject, fileNameKey?: string) {
 
   const decodeName = fileName ? decodeURIComponent(fileName) : '附件'
 
-  const [blob, eLink] = [new Blob([data], { type }), document.createElement('a')]
+  const [blob, eLink] = [
+    new Blob([data], { type }),
+    document.createElement('a'),
+  ]
 
   eLink.download = decodeName
   eLink.style.display = 'none'
@@ -163,6 +175,36 @@ export function $downloadFile(res: AnyObject, fileNameKey?: string) {
  * item字段映射
  *
  * @param   {[Object]}  fieldsMap  [传入字段映射表，返回返]
+ *
+ * @example
+ * ```typescript
+ * const fieldsMap = {
+ *   name: 'user.name',
+ *   age: 'user.age',
+ *   address: 'user.contact.address'
+ * };
+ *
+ * const item = {
+ *   user: {
+ *     name: 'John Doe',
+ *     age: 30,
+ *     contact: {
+ *       address: '123 Main St'
+ *     }
+ *   }
+ * };
+ *
+ * const mapFields = itemFiledsMap(fieldsMap);
+ * const formattedItem = mapFields(item);
+ *
+ * console.log(formattedItem);
+ * // Output:
+ * // {
+ * //   name: 'John Doe',
+ * //   age: 30,
+ * //   address: '123 Main St'
+ * // }
+ * ```
  *
  * @return  {[Function]}             [return 映射转换]
  */
