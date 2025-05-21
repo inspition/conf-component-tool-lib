@@ -3,8 +3,9 @@ import type {
   TableProps as _TableProps,
   ElTable,
   PaginationProps,
+  TableColumnCtx,
 } from 'element-plus';
-import type { TableColumn } from 'element-plus/es/components/table/src/table-column/defaults.mjs';
+// import type { TableColumnCtx } from 'element-plus/lib/components/index.js';
 
 import type { Component } from 'vue';
 
@@ -14,7 +15,7 @@ import { ElPagination } from 'element-plus';
 
 import { apiTools, chainAccess } from '#/utils/common-tools';
 
-type ColumnProps = TableColumn<any>;
+type ColumnProps = TableColumnCtx<any>;
 
 interface ColumnDefaultScope {
   row: any;
@@ -24,12 +25,12 @@ interface ColumnDefaultScope {
 
 // 类型定义
 interface ColumnDef extends ColumnProps {
-  prop?: string;
-  label?: string;
-  align?: 'center' | 'left' | 'right';
+  // prop?: string;
+  // label?: string;
+  // align?: 'center' | 'left' | 'right';
   render?: Component;
   headerRender?: Component;
-  formatter?: (row: any, column: any, cellValue: any) => string;
+  // formatter?: (row: any, column: any, cellValue: any) => string;
   [key: string]: any;
 }
 
