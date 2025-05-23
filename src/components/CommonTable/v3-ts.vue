@@ -1,108 +1,112 @@
 <script lang="ts" setup>
+/* 通用表格组件
+---------------------------------------------------------------
+功能特性：
+1. 支持动态列配置与自定义渲染
+2. 集成分页功能与数据请求
+3. 兼容Element Plus Table所有原生属性
+4. 支持多选列配置
+5. 提供表格布局自动重置能力
+----------------------------------------------------------------
+使用步骤：
+1. 导入组件：import CommonTable from '@/components/CommonTable.vue'
+2. 配置表格参数：按照TableConf类型定义配置
+3. 绑定数据请求逻辑
+4. 自定义列渲染（可选）
+----------------------------------------------------------------
+*/
+
 import type {
   TableProps as _TableProps,
-  ElTable,
   PaginationProps,
   TableColumnCtx,
 } from 'element-plus';
-// import type { TableColumnCtx } from 'element-plus/lib/components/index.js';
 
-import type { Component } from 'vue';
+import type { ComponentInstance } from 'vue';
 
 import { computed, onMounted, ref } from 'vue';
 
-import { ElPagination } from 'element-plus';
+import { ElPagination, ElRow, ElTable, ElTableColumn } from 'element-plus';
 
-import { apiTools, chainAccess } from '#/utils/common-tools';
+import { chainAccess } from '#/utils/common-tools';
 
-type ColumnProps = TableColumnCtx<any>;
+// ====================== 类型定义 ======================
+type ColumnProps = Partial<TableColumnCtx<unknown>>;
 
+/** 列默认作用域类型 */
 interface ColumnDefaultScope {
   row: any;
   column: any;
   $index: number;
 }
 
-// 类型定义
+/** 列配置类型 */
 interface ColumnDef extends ColumnProps {
-  // prop?: string;
-  // label?: string;
-  // align?: 'center' | 'left' | 'right';
-  render?: Component;
-  headerRender?: Component;
-  // formatter?: (row: any, column: any, cellValue: any) => string;
+  /** 自定义单元格渲染组件 */
+  render?: ComponentInstance<any>;
+  /** 自定义表头渲染组件 */
+  headerRender?: ComponentInstance<any>;
+  /** 其他自定义属性 */
   [key: string]: any;
 }
 
+/** 数据请求器配置 */
 interface Requester {
+  /** 请求参数数组 */
   params?: any[];
+  /** 请求API方法 */
   api?: (...args: any[]) => Promise<any>;
+  /** 响应数据路径（支持链式访问，如 'data.list'） */
   path?: string;
+  /** 数据转换方法 */
   getter?: (data: any) => any[];
 }
 
+/** 表格主配置类型（继承Element Table所有属性） */
 interface TableConf extends Partial<_TableProps<any>> {
-  // interface TableConf extends Partial<TableInstance['$props']> {
-  // interface TableConf extends TableInstance['$props'] {
-  data?: any[];
+  /** 列配置数组（必需） */
   columnList: ColumnDef[];
+  /** 多选列配置 */
   selection?: ColumnDef[];
+  /** 数据请求配置 */
   requester?: Requester;
+  /** 分页配置 */
   pagintion?: {
+    /** Element Pagination组件属性 */
     bind?: PaginationProps;
   };
+  /** 事件监听配置 */
   on?: Record<string, (...args: any[]) => void>;
-  // 'highlight-current-row'?: boolean;
-  // [key: string]: any;
 }
 
-// interface Pagination {
-//   page?: number;
-//   pageSize?: number;
-//   total?: number;
-// }
-
+/** 组件Props类型 */
 interface TableProps {
+  /** 顶部标题（支持字符串或数组） */
   headTitle?: any[] | string;
+  /** 表格配置（核心配置） */
   tableConf: TableConf;
 }
 
+// ====================== 组件逻辑 ======================
 const props = defineProps<TableProps>();
-const {
-  tableConf,
-  // tableConf = {
-  //   data: [],
-  //   columnList: [
-  //     // {
-  //     //   prop: "prop1",
-  //     //   // label: "商机编码",
-  //     //   align: "center"
-  //     // },
-  //   ],
-  //   requester: {
-  //     params: [1, 10],
-  //     api: () => Promise.resolve(),
-  //     path: '',
-  //     getter: () => null,
-  //   },
-  // },
-} = props;
-// const { tableConf } = toRefs(props);
+const { tableConf } = props;
 
-const { apiReq } = apiTools;
-const isLoading = ref(false);
-const pageInfo = ref({ page: 1, pageSize: 10, total: 0 });
+// 响应式状态
+const isLoading = ref(false); // 加载状态
+const pageInfo = ref({ pageNum: 1, pageSize: 10, size: 0 }); // 分页信息
+const currentRow = ref(null); // 当前选中行
+const commonTable = ref<InstanceType<typeof ElTable>>(); // 表格实例引用
 const pageSize = ref(10);
-const currentRow = ref(null);
-const commonTable = ref();
 
+// 分页尺寸计算属性
 const calcPageSize = computed(
   () => tableConf?.requester?.params?.[1] ?? pageSize.value,
 );
 
+// 动态分页配置（合并默认配置与用户配置）
 const dynamicPagintion = computed<Partial<PaginationProps>>(() => {
   const { tableConf } = props;
-  const { page: currentPage, total } = pageInfo.value ?? {};
+  const { pageNum: currentPage, size: total } = pageInfo.value ?? {};
 
   return {
     pageSize: calcPageSize.value,
@@ -116,6 +120,7 @@ const dynamicPagintion = computed<Partial<PaginationProps>>(() => {
   };
 });
 
+// 初始化表格数据
 const initData = async () => {
   const { tableConf } = props;
   const { requester } = tableConf;
@@ -123,31 +128,35 @@ const initData = async () => {
 
   const { api = () => Promise<null>, params } = requester;
   isLoading.value = true;
-  const { data } = await apiReq(api)(...(params ?? []));
+  const data = await api(...(params ?? []));
   pageInfo.value = data;
   tableConf.data = decodeData(data) || [];
   isLoading.value = false;
 };
 
+// 当前行变化处理
 const handleTableCurrentChange = (val: any) => {
   if (!tableConf.highlightCurrentRow) return;
   currentRow.value = val;
 };
 
-const getPropVal = ({ column: { property }, row = {} }: any) => row?.[property];
+// 获取单元格值
+const getPropVal = ({ column: { property }, row = {} }: any) => {
+  return row?.[property];
+};
 
+// 单元格内容渲染
 const $renderScope = (scope: ColumnDefaultScope) => {
-  const {
-    column: { property, formatter },
-    row,
-  } = scope || {};
-  const cellVal =
-    (typeof row[property] === 'number' && row[property].toString()) ||
-    row[property] ||
-    '--';
+  const { column, row } = scope || {};
+  const { property, formatter } = column ?? {};
+  const val = row?.[property];
+
+  const cellVal = (typeof val === 'number' && val?.toString()) || val || '--';
+
   return formatter ? formatter(row, scope.column, cellVal) : cellVal;
 };
 
+// 分页变化处理
 const handleCurrentChange = (cur: number) => {
   if (tableConf?.requester?.params?.[0]) {
     tableConf.requester.params[0] = cur;
@@ -164,6 +173,7 @@ const handleSizeChange = (size: number) => {
   initData();
 };
 
+// 数据解码（支持路径访问和数据转换）
 const decodeData = (res: any) => {
   const { getter, path } = tableConf.requester ?? {};
   const decode = path ? chainAccess(res, path) : res;
@@ -180,14 +190,19 @@ const decodeData = (res: any) => {
 //   tableConf.data = decodeData(object) || [];
 // };
 
+// 重置表格布局
 function restTableLayout() {
   commonTable.value?.doLayout?.();
 }
 
+// 初始化
 function init() {
   initData();
   restTableLayout();
 }
+
+// 暴露方法给父组件
+defineExpose({ initData });
 
 onMounted(init);
 </script>
@@ -195,7 +210,7 @@ onMounted(init);
 <template>
   <div class="common-table" v-loading="isLoading">
     <slot name="operaNav" :row="currentRow"></slot>
-    <el-table
+    <ElTable
       @current-change="handleTableCurrentChange"
       v-bind="tableConf"
       v-on="tableConf.on ?? {}"
@@ -204,7 +219,7 @@ onMounted(init);
     >
       <!-- 独立多选列 -->
       <template v-if="tableConf.selection">
-        <el-table-column
+        <ElTableColumn
           v-for="(v, i) in tableConf.selection"
           :key="i"
           v-bind="v"
@@ -212,7 +227,7 @@ onMounted(init);
       </template>
 
       <!-- 动态列配置 -->
-      <el-table-column
+      <ElTableColumn
         v-for="(v, i) in tableConf.columnList"
         :key="`column-${i}`"
         v-bind="v"
@@ -238,10 +253,10 @@ onMounted(init);
           />
           {{ (!v.headerRender && v.label) || '' }}
         </template>
-      </el-table-column>
-    </el-table>
+      </ElTableColumn>
+    </ElTable>
 
-    <el-row
+    <ElRow
       type="flex"
       align="middle"
       class="common-pagination"
@@ -252,7 +267,7 @@ onMounted(init);
         @current-change="handleCurrentChange"
         v-bind="dynamicPagintion"
       />
-    </el-row>
+    </ElRow>
   </div>
 </template>
 
