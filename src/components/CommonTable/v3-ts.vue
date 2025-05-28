@@ -24,11 +24,11 @@ import type {
 
 import type { ComponentInstance } from 'vue'
 
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, defineModel } from 'vue'
 
 import { ElPagination, ElRow, ElTable, ElTableColumn } from 'element-plus'
 
-import { apiReq, chainAccess } from '@/utils/common-tools'
+import { apiReq, chainAccess } from '#/utils/common-tools'
 
 // ====================== 类型定义 ======================
 type ColumnProps = Partial<TableColumnCtx<unknown>>
@@ -94,9 +94,9 @@ interface TableProps {
 
 // ====================== 组件逻辑 ======================
 const { tableConf } = defineProps<TableProps>()
+const model = defineModel<any[]>()
 // const { tableConf } = props;
 // const { tableConf: confRefs } = toRefs(props);
-
 /** 响应式状态 */
 const isLoading = ref(false) // 加载状态
 const pageInfo = ref<{ [k: string]: any }>({
@@ -145,8 +145,22 @@ const initData = async () => {
   isLoading.value = true
   const { data } = await apiReq(api)(...(params ?? []))
   pageInfo.value = data
-  tableConf.data = decodeData(data) || []
+
+  // tableConf.data = decodeData(data) || [];
+  syncData(data)
+
   isLoading.value = false
+}
+
+/** 同步数据，未传入双向绑定参数则修改配置data */
+const syncData = (data: any) => {
+  const decode = decodeData(data) ?? []
+
+  if (model.value) {
+    model.value = decode
+  } else {
+    tableConf.data = decode
+  }
 }
 
 /** 当前行变化处理 */
@@ -179,7 +193,6 @@ const handleCurrentChange = (cur: number) => {
   // getValue(() => (tableConf.requester.params[0] = cur));
   initData()
 }
-
 const handleSizeChange = (size: number) => {
   if (tableConf?.requester?.params?.[1]) {
     tableConf.requester.params[1] = size
@@ -229,6 +242,7 @@ onMounted(init)
       @current-change="handleTableCurrentChange"
       v-bind="tableConf"
       v-on="tableConf.on ?? {}"
+      :data="model ?? tableConf.data"
       class="fit-empty"
       ref="commonTable"
     >
