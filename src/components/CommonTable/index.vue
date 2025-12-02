@@ -25,14 +25,21 @@
         ></el-table-column>
       </template>
 
+      <!-- 动态列配置，支持多级树表头 -->
+      <cm-table-dynamic-column
+        v-for="(v, i) in tableConf.columnList"
+        :key="'column-' + i"
+        :conf="v"
+      />
+
       <!-- 动态列配置 -->
-      <el-table-column
+      <!-- <el-table-column
         v-for="(v, i) in tableConf.columnList"
         :key="'column-' + i"
         v-bind="v"
       >
         <template slot-scope="scope">
-          <!-- render || JSX -->
+          !-- render || JSX --
           <component
             v-if="v.render"
             :is="v.render"
@@ -42,12 +49,11 @@
             :conf="v"
           ></component>
 
-          <!-- <div class="pre-line" v-else>{{ $renderScope(scope) }}</div> -->
-          {{ (!v.render && $renderScope(scope)) || "" }}
+          {{ (!v.render && $renderScope(scope)) || '' }}
         </template>
 
         <template slot="header" slot-scope="scope">
-          <!-- render || JSX -->
+          !-- render || JSX --
           <component
             v-if="v.headerRender"
             :is="v.headerRender"
@@ -55,9 +61,9 @@
             :conf="v"
           ></component>
 
-          {{ (!v.headerRender && v.label) || "" }}
+          {{ (!v.headerRender && v.label) || '' }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <!-- 缺省行 -->
       <!-- <template slot="empty">
@@ -82,11 +88,15 @@
 
 <script>
 // import CmHeader from "@/components/CmHeader";
-import { apiTools, chainAccess, getValue } from "@/utils/common-tools";
+import { apiTools, chainAccess, getValue } from '@/utils/common-tools'
+import CmTableDynamicColumn from './cm-table-dynamic-column.vue'
 
 export default {
-  name: "CommonTable",
-  // components: { CmHeader },
+  name: 'CommonTable',
+  components: {
+    // CmHeader,
+    CmTableDynamicColumn,
+  },
   props: {
     headTitle: [String, Array],
     tableConf: {
@@ -104,17 +114,17 @@ export default {
           requester: {
             params: [1, 10],
             api: () => Promise.resolve(),
-            path: "", // 接口返回后数据解析路径
+            path: '', // 接口返回后数据解析路径
             getter: () => null, // 返回数据过滤方法
           },
-        };
+        }
       },
     },
   },
   computed: {
     calcPageSize() {
-      const size = this.$get(() => this.tableConf.requester.params[1]);
-      return size || this.pageSize;
+      const size = this.$get(() => this.tableConf.requester.params[1])
+      return size || this.pageSize
     },
     /**
      * 分页属性动态处理
@@ -122,7 +132,7 @@ export default {
      * @return  {[type]}  [return description]
      */
     dynamicPagintion() {
-      const { tableConf, pageInfo, calcPageSize } = this;
+      const { tableConf, pageInfo, calcPageSize } = this
       const {
         currentPage,
         totalPages,
@@ -130,21 +140,21 @@ export default {
 
         // // 非正式版分页兼容
         // totalElements,
-      } = pageInfo || {};
+      } = pageInfo || {}
 
       const attrs = {
-        "page-size": calcPageSize,
-        "current-page": currentPage,
-        "page-count": totalPages,
-        "page-sizes": [5, 10, 20],
+        'page-size': calcPageSize,
+        'current-page': currentPage,
+        'page-count': totalPages,
+        'page-sizes': [5, 10, 20],
         total: totalCounts,
-        layout: "total, prev, sizes, pager, next",
+        layout: 'total, prev, sizes, pager, next',
         background: true,
 
         ...tableConf?.pagintion.bind,
-      };
+      }
 
-      return attrs;
+      return attrs
     },
   },
   data() {
@@ -152,26 +162,26 @@ export default {
       isLoading: false,
       pageInfo: {},
       pageSize: 10,
-      keywords: "",
+      keywords: '',
       currentRow: null,
-    };
+    }
   },
   mounted() {
-    this.init();
+    this.init()
   },
   methods: {
     ...apiTools,
 
     $get: getValue,
     async init() {
-      const { initData, restTableLayout } = this;
+      const { initData, restTableLayout } = this
 
-      await initData();
+      await initData()
 
-      restTableLayout();
+      restTableLayout()
     },
     restTableLayout() {
-      this.$refs.commonTable?.doLayout?.();
+      this.$refs.commonTable?.doLayout?.()
     },
     /**
      * 插槽属性转换
@@ -182,54 +192,54 @@ export default {
       const {
         column: { property, formatter },
         row,
-      } = scope || {};
+      } = scope || {}
       const cellVal =
         // 数值0判断
-        (typeof row[property] === "number" && row[property].toString()) ||
+        (typeof row[property] === 'number' && row[property].toString()) ||
         row[property] ||
-        "--";
+        '--'
 
-      return formatter ? formatter(row, scope.column, cellVal) : cellVal;
+      return formatter ? formatter(row, scope.column, cellVal) : cellVal
     },
     handleTableCurrentChange(val) {
-      if (!this.tableConf["highlight-current-row"]) return;
+      if (!this.tableConf['highlight-current-row']) return
       // console.log('handleTableCurrentChange', val);
 
-      this.currentRow = val;
+      this.currentRow = val
     },
     /**
      * 获取字段值
      */
     getPropVal({ column: { property }, row = {} } = { column: {} }) {
-      return row[property];
+      return row[property]
     },
     handleCurrentChange(cur) {
-      const { $get, initData, tableConf } = this;
+      const { $get, initData, tableConf } = this
 
-      $get(() => (tableConf.requester.params[0] = cur));
-      initData();
+      $get(() => (tableConf.requester.params[0] = cur))
+      initData()
     },
     handleSizeChange(size) {
-      const { $get, initData, tableConf } = this;
+      const { $get, initData, tableConf } = this
 
-      $get(() => (tableConf.requester.params[1] = size));
-      initData();
+      $get(() => (tableConf.requester.params[1] = size))
+      initData()
     },
     async initData() {
-      const { tableConf, apiReq, decodeData } = this;
-      const { requester } = tableConf;
+      const { tableConf, apiReq, decodeData } = this
+      const { requester } = tableConf
 
-      if (!requester) return;
+      if (!requester) return
 
-      const { api, params } = requester;
+      const { api, params } = requester
 
-      this.isLoading = true;
+      this.isLoading = true
 
-      const { object } = await apiReq(api)(...(params ?? []));
-      this.pageInfo = object;
-      tableConf.data = decodeData(object) || [];
+      const { object } = await apiReq(api)(...(params ?? []))
+      this.pageInfo = object
+      tableConf.data = decodeData(object) || []
 
-      this.isLoading = false;
+      this.isLoading = false
     },
     /**
      * 解析数据
@@ -239,26 +249,26 @@ export default {
      * @return  {[type]}       [return description]
      */
     decodeData(res) {
-      const { getter, path } = this.tableConf.requester ?? {};
-      const decode = path ? chainAccess(res, path) : res;
-      const data = getter?.(decode) ?? decode;
+      const { getter, path } = this.tableConf.requester ?? {}
+      const decode = path ? chainAccess(res, path) : res
+      const data = getter?.(decode) ?? decode
 
-      return data;
+      return data
     },
     async search(...parmasSearch) {
-      const { tableConf, apiReq, decodeData } = this;
-      const { api, params } = tableConf.requester;
-      const p = parmasSearch.length ? [...parmasSearch] : [...params];
+      const { tableConf, apiReq, decodeData } = this
+      const { api, params } = tableConf.requester
+      const p = parmasSearch.length ? [...parmasSearch] : [...params]
 
-      this.isLoading = true;
-      const { object } = await apiReq(api)(...p);
-      this.isLoading = false;
+      this.isLoading = true
+      const { object } = await apiReq(api)(...p)
+      this.isLoading = false
 
-      this.pageInfo = object;
-      tableConf.data = decodeData(object) || [];
+      this.pageInfo = object
+      tableConf.data = decodeData(object) || []
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
