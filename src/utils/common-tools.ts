@@ -301,6 +301,38 @@ export class ConcurrencyManager {
 }
 
 /**
+ * 查找对象中特定值的路径
+ * @param {Object} obj - 要搜索的对象
+ * @param {*} target - 要查找的值
+ * @param {string} path - 当前路径（递归时使用）
+ * @returns {Array} - 返回路径数组，找不到返回 null
+ */
+export function findValuePath(
+  obj: any,
+  target: any,
+  path: string[] = []
+): string[] | null {
+  // 遍历对象的所有属性
+  for (let key in obj) {
+    if (!obj.hasOwnProperty(key)) continue
+
+    const currentPath = [...path, key]
+
+    // 如果当前值等于目标值，返回路径
+    if (obj[key] === target) return currentPath
+
+    // 如果当前值是对象或数组，递归查找
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      const result = findValuePath(obj[key], target, currentPath)
+
+      if (result) return result
+    }
+  }
+
+  return null
+}
+
+/**
  * API工具组合
  *
  * @var {[type]}
