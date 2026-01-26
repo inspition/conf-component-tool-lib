@@ -123,7 +123,7 @@ export function $catchBack(errPrefix = '') {
  * @returns {args<T><ReturnType><T> | undefined} return description
  */
 export function apiReq<T extends (...args: any[]) => any>(
-  api: T
+  api: T,
 ): (...args: Parameters<T>) => ReturnType<T> {
   return (...params: any[]) =>
     api(...(params ?? []))
@@ -310,7 +310,7 @@ export class ConcurrencyManager {
 export function findValuePath(
   obj: any,
   target: any,
-  path: string[] = []
+  path: string[] = [],
 ): string[] | null {
   // 遍历对象的所有属性
   for (let key in obj) {
@@ -330,6 +330,51 @@ export function findValuePath(
   }
 
   return null
+}
+
+/**
+ * 深拷贝函数
+ * @param data 要拷贝的数据
+ * @returns 拷贝后的数据
+ */
+export function deepCopy(data: any) {
+  // 值类型数组
+  const valTypes = [Number.name, Boolean.name, String.name, 'Null', 'Undefined']
+  const dataType = Object.prototype.toString.call(data)
+
+  let copy: any
+
+  // 数组
+  if (dataType.includes(Array.name)) {
+    copy = []
+  }
+  // 对象
+  else if (dataType.includes(Object.name)) {
+    copy = {}
+  }
+  // 函数
+  else if (dataType.includes(Function.name)) {
+    return
+  }
+  // 值类型
+  else if (valTypes.some(t => dataType.includes(t))) {
+    return data
+  }
+  // 其他类型
+  else {
+    copy = {}
+  }
+
+  for (const key in data) {
+    const item = data[key]
+
+    // 忽略函数类型
+    if (Object.prototype.toString.call(item).includes(Function.name)) continue
+
+    copy[key] = deepCopy(item)
+  }
+
+  return copy
 }
 
 /**
