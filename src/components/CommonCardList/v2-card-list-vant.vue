@@ -27,13 +27,13 @@
                 v-bind="row.bind"
                 class="item-row"
               >
-                <van-col v-bind="row.labelBind" :span="5" class="row-label">{{
-                  row.label
-                }}</van-col>
+                <van-col v-bind="row.labelBind" :span="5" class="row-label">
+                  {{ row.label }}
+                </van-col>
 
-                <van-col v-bind="row.valueBind" :span="18" class="row-value">{{
-                  val[row.prop]
-                }}</van-col>
+                <van-col v-bind="row.valueBind" :span="18" class="row-value">
+                  {{ val[row.prop] }}
+                </van-col>
               </van-row>
 
               <!-- JSX -->
@@ -105,11 +105,11 @@ export default {
             // 分页递进回调
             incrementPageNo: () => null,
             api: () =>
-              new Promise(resolve => setTimeout(() => resolve([]), 1500))
+              new Promise(resolve => setTimeout(() => resolve([]), 1500)),
           },
           refreshConf: {
             isLoading: false,
-            onRefresh: () => null
+            onRefresh: () => null,
           },
           // van-cell动态属性
           cellBind: {
@@ -122,22 +122,22 @@ export default {
             // render: {}
           },
           bind: {
-            finished: true
+            finished: true,
           },
-          listeners: {}
+          listeners: {},
 
           // 插槽配置
           // slots: [{ name: 'title', render: {} }]
         }
-      }
+      },
     },
     /**
      * 遮罩加载禁用
      */
     overlayLoadDisabled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     cellBind() {
@@ -154,7 +154,7 @@ export default {
     },
     requester() {
       return this.listConf?.requester ?? {}
-    }
+    },
   },
   created() {
     this.init()
@@ -229,14 +229,8 @@ export default {
     },
     async reqList() {
       const { requester, listConf } = this
-      const {
-        api,
-        params,
-        paramGetter,
-        path,
-        pageInfoPath,
-        handleFinally
-      } = requester
+      const { api, params, paramGetter, path, pageInfoPath, handleFinally } =
+        requester
       const body = paramGetter ? paramGetter(params) : params
 
       const res = await apiReq(api)(body)
@@ -260,7 +254,7 @@ export default {
         hasPagination,
         bind,
         data,
-        requester: { incrementPageNo, params, pageInfo }
+        requester: { incrementPageNo, params, pageInfo },
       } = listConf
       const options = { params, result, pageInfo }
       const total = getTotal(pageInfo)
@@ -304,7 +298,7 @@ export default {
         overlayLoadDisabled,
         handleFinished,
         reqList,
-        $nextTick
+        $nextTick,
       } = this
       if (!listConf.requester) return
 
@@ -322,8 +316,8 @@ export default {
       listConf.modeLoading = false
       // !overlayLoadDisabled && $sfLoadingClose(0);
       !overlayLoadDisabled && this.$emit('loading', false) // 局部阻断导航栏操作
-    }
-  }
+    },
+  },
 }
 </script>
 
