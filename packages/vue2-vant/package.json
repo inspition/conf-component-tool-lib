@@ -1,0 +1,36 @@
+{
+  "name": "@conf-tool/vue2-vant",
+  "version": "1.0.0",
+  "description": "Vue2 + Vant 配置化组件",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "dependencies": {
+    "@conf-tool/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^2.7.0",
+    "vant": "^2.12.0"
+  },
+  "devDependencies": {
+    "vue": "^2.7.16",
+    "vant": "^2.13.2",
+    "@vitejs/plugin-vue2": "^2.3.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.4.0",
+    "vite-plugin-dts": "^3.9.0"
+  }
+}
