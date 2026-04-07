@@ -5,10 +5,7 @@
     "rootDir": "./src",
     "declaration": true,
     "declarationDir": "./dist",
-    "jsx": "preserve",
-    "paths": {
-      "@conf-tool/shared": ["../shared/src"]
-    }
+    "jsx": "preserve"
   },
   "include": ["src/**/*.ts", "src/**/*.vue"]
 }

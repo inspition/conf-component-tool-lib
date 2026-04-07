@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'mjs' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['vue', 'element-plus'],
+      external: ['vue', 'element-plus', '@conf-tool/shared'],
       output: {
         globals: {
           vue: 'Vue',

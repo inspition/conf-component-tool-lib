@@ -6,10 +6,7 @@
     "declaration": true,
     "declarationDir": "./dist",
     "jsx": "preserve",
-    "jsxImportSource": "vue",
-    "paths": {
-      "@conf-tool/shared": ["../shared/src"]
-    }
+    "jsxImportSource": "vue"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
