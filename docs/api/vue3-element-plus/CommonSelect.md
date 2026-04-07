@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```ts
-import { CommonSelect } from '@conf-tool/vue3-element-plus'
+import { CommonSelect } from '@conf-component-tool-lib/vue3-element-plus'
 ```
 
 ---
@@ -59,7 +59,7 @@ interface CmOptions {
 ```vue
 <script setup>
 import { ref } from 'vue'
-import { CommonSelect } from '@conf-tool/vue3-element-plus'
+import { CommonSelect } from '@conf-component-tool-lib/vue3-element-plus'
 
 const selected = ref('')
 const dataList = [

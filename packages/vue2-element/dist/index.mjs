@@ -1,6 +1,6 @@
 import { Message as h, MessageBox as _ } from "element-ui";
-import { $downloadFile as g, $thenBack as m, getValue as p, chainAccess as u } from "@conf-tool/shared";
-export * from "@conf-tool/shared";
+import { $downloadFile as g, $thenBack as m, getValue as p, chainAccess as u } from "@conf-component-tool-lib/shared";
+export * from "@conf-component-tool-lib/shared";
 function d(e = "") {
   return function(t) {
     const [n, a] = [
@@ -376,7 +376,7 @@ var w = function() {
   k,
   !1,
   null,
-  "816b4bed"
+  "259a51db"
 );
 const N = x.exports, R = {
   name: "CommonDescriptions",
@@ -487,7 +487,7 @@ var S = function() {
   D,
   !1,
   null,
-  "e3180940"
+  "b7566626"
 );
 const J = P.exports, q = {
   key: "label",
@@ -601,7 +601,7 @@ var O = function() {
   j,
   !1,
   null,
-  "0c303db0"
+  "3de0249c"
 );
 const H = I.exports;
 export {

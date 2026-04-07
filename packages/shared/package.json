@@ -1,5 +1,5 @@
 {
-  "name": "@conf-tool/shared",
+  "name": "@conf-component-tool-lib/shared",
   "version": "1.0.0",
   "description": "公共类型与工具函数",
   "type": "module",

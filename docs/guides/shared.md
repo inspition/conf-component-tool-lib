@@ -1,23 +1,23 @@
 # Shared 工具库 使用指南
 
-> `@conf-tool/shared` — 跨框架共享的工具函数集合
+> `@conf-component-tool-lib/shared` — 跨框架共享的工具函数集合
 
 ## 安装
 
 ```bash
-pnpm add @conf-tool/shared
+pnpm add @conf-component-tool-lib/shared
 ```
 
-> 注意：`@conf-tool/vue2-element`、`@conf-tool/vue3-element-plus`、`@conf-tool/vue2-vant` 已自动依赖此包，通常不需要单独安装。
+> 注意：`@conf-component-tool-lib/vue2-element`、`@conf-component-tool-lib/vue3-element-plus`、`@conf-component-tool-lib/vue2-vant` 已自动依赖此包，通常不需要单独安装。
 
 ## 引入方式
 
 ```js
 // 直接引入
-import { chainAccess, getValue, itemFiledsMap, deepCopy } from '@conf-tool/shared'
+import { chainAccess, getValue, itemFiledsMap, deepCopy } from '@conf-component-tool-lib/shared'
 
 // 各包的 tools.ts 已重新导出常用函数
-import { apiReq, $confirmReq } from '@conf-tool/vue2-element'
+import { apiReq, $confirmReq } from '@conf-component-tool-lib/vue2-element'
 ```
 
 ---
@@ -29,7 +29,7 @@ import { apiReq, $confirmReq } from '@conf-tool/vue2-element'
 从嵌套对象中通过字符串路径提取值。这是整个框架的**数据提取引擎**。
 
 ```js
-import { chainAccess } from '@conf-tool/shared'
+import { chainAccess } from '@conf-component-tool-lib/shared'
 
 const response = {
   data: {
@@ -59,7 +59,7 @@ chainAccess(response, 'data.nonExist.path')
 ### getValue — 安全取值
 
 ```js
-import { getValue } from '@conf-tool/shared'
+import { getValue } from '@conf-component-tool-lib/shared'
 
 getValue({ a: { b: 1 } }, 'a.b')  // → 1
 getValue({ a: { b: 1 } }, 'a.c')  // → undefined
@@ -70,7 +70,7 @@ getValue({ a: { b: 1 } }, 'a.c')  // → undefined
 批量重命名对象字段，支持嵌套路径访问：
 
 ```js
-import { itemFiledsMap } from '@conf-tool/shared'
+import { itemFiledsMap } from '@conf-component-tool-lib/shared'
 
 const source = {
   user_name: '张三',
@@ -91,7 +91,7 @@ const result = itemFiledsMap(source, {
 ### joinDebounce — 防抖合并
 
 ```js
-import { joinDebounce } from '@conf-tool/shared'
+import { joinDebounce } from '@conf-component-tool-lib/shared'
 
 const debouncedSearch = joinDebounce((keyword) => {
   fetchResults(keyword)
@@ -106,7 +106,7 @@ inputElement.addEventListener('input', (e) => {
 ### genrateParallels — 并行请求
 
 ```js
-import { genrateParallels } from '@conf-tool/shared'
+import { genrateParallels } from '@conf-component-tool-lib/shared'
 
 const [users, depts, roles] = await genrateParallels([
   fetchUsers(),
@@ -118,7 +118,7 @@ const [users, depts, roles] = await genrateParallels([
 ### deepCopy — 深拷贝
 
 ```js
-import { deepCopy } from '@conf-tool/shared'
+import { deepCopy } from '@conf-component-tool-lib/shared'
 
 const original = { a: { b: [1, 2, 3] } }
 const copy = deepCopy(original)
@@ -131,7 +131,7 @@ copy.a.b.push(4)
 在嵌套对象中查找指定值的路径：
 
 ```js
-import { findValuePath } from '@conf-tool/shared'
+import { findValuePath } from '@conf-component-tool-lib/shared'
 
 const tree = {
   a: { b: { c: 'target' } },
@@ -153,7 +153,7 @@ findValuePath(tree, 'target')
 统一处理 API 响应，检查 `code === 0` 或约定的成功标志：
 
 ```js
-import { $thenBack } from '@conf-tool/shared'
+import { $thenBack } from '@conf-component-tool-lib/shared'
 
 const data = await api.fetchList().then($thenBack)
 // 成功: 返回 response.data
@@ -165,7 +165,7 @@ const data = await api.fetchList().then($thenBack)
 封装 API 调用，自动处理 loading 和错误：
 
 ```js
-import { apiReq } from '@conf-tool/vue2-element'  // 从对应包引入
+import { apiReq } from '@conf-component-tool-lib/vue2-element'  // 从对应包引入
 
 const result = await apiReq(updateUser, [userId, formData])
 // 自动处理: $thenBack → 成功提示 | 错误提示
@@ -176,7 +176,7 @@ const result = await apiReq(updateUser, [userId, formData])
 弹出确认框，确认后执行 API 请求：
 
 ```js
-import { $confirmReq } from '@conf-tool/vue2-element'
+import { $confirmReq } from '@conf-component-tool-lib/vue2-element'
 
 $confirmReq(
   '确定删除该用户?',     // 确认文本
@@ -192,7 +192,7 @@ $confirmReq(
 ### $downloadFile — 文件下载
 
 ```js
-import { $downloadFile } from '@conf-tool/shared'
+import { $downloadFile } from '@conf-component-tool-lib/shared'
 
 $downloadFile(fileBlob, 'report.xlsx')
 ```
@@ -202,7 +202,7 @@ $downloadFile(fileBlob, 'report.xlsx')
 检查返回的 Blob 是否为有效文件（排除 JSON 错误响应）：
 
 ```js
-import { checkFileCatch } from '@conf-tool/shared'
+import { checkFileCatch } from '@conf-component-tool-lib/shared'
 
 const blob = await api.exportExcel()
 const isValid = await checkFileCatch(blob)
@@ -216,7 +216,7 @@ if (isValid) {
 管理并发请求数量：
 
 ```js
-import { ConcurrencyManager } from '@conf-tool/shared'
+import { ConcurrencyManager } from '@conf-component-tool-lib/shared'
 
 const manager = new ConcurrencyManager(3)  // 最大并发数 3
 

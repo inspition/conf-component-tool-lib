@@ -1,7 +1,7 @@
 import { MessageBox, Message } from 'element-ui'
-import { $thenBack, $downloadFile, type AnyObject } from '@conf-tool/shared'
+import { $thenBack, $downloadFile, type AnyObject } from '@conf-component-tool-lib/shared'
 
-export * from '@conf-tool/shared'
+export * from '@conf-component-tool-lib/shared'
 
 /**
  * API catch回调处理 (Element UI)

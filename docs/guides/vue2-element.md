@@ -1,11 +1,11 @@
 # Vue 2 Element UI 包 使用指南
 
-> `@conf-tool/vue2-element` — 基于 Element UI 的配置化组件集合
+> `@conf-component-tool-lib/vue2-element` — 基于 Element UI 的配置化组件集合
 
 ## 安装
 
 ```bash
-pnpm add @conf-tool/vue2-element
+pnpm add @conf-component-tool-lib/vue2-element
 ```
 
 **前置依赖**：
@@ -24,10 +24,10 @@ pnpm add @conf-tool/vue2-element
 
 ```js
 // 按需引入组件
-import { CommonTable, CommonSelect, CommonDescriptions } from '@conf-tool/vue2-element'
+import { CommonTable, CommonSelect, CommonDescriptions } from '@conf-component-tool-lib/vue2-element'
 
 // 引入工具函数
-import { apiReq, $confirmReq } from '@conf-tool/vue2-element'
+import { apiReq, $confirmReq } from '@conf-component-tool-lib/vue2-element'
 ```
 
 ## CommonTable 完全指南
@@ -40,7 +40,7 @@ import { apiReq, $confirmReq } from '@conf-tool/vue2-element'
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 
 export default {
   components: { CommonTable },
@@ -73,7 +73,7 @@ export default {
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 import { getUserList } from '@/api/user'
 
 export default {
@@ -296,7 +296,7 @@ this.$refs.commonTable.search(1, 20)
 </template>
 
 <script>
-import { CommonDescriptions } from '@conf-tool/vue2-element'
+import { CommonDescriptions } from '@conf-component-tool-lib/vue2-element'
 import { getOrderDetail } from '@/api/order'
 
 export default {
@@ -371,7 +371,7 @@ tableConf
 封装 API 请求，自动处理 loading 和错误通知：
 
 ```js
-import { apiReq } from '@conf-tool/vue2-element'
+import { apiReq } from '@conf-component-tool-lib/vue2-element'
 
 // 基础用法
 const result = await apiReq(updateUser, [userId, formData])
@@ -388,7 +388,7 @@ apiReq(deleteUser, [userId]).then(data => {
 带确认弹窗的 API 请求：
 
 ```js
-import { $confirmReq } from '@conf-tool/vue2-element'
+import { $confirmReq } from '@conf-component-tool-lib/vue2-element'
 
 // 删除前确认
 $confirmReq('确定删除该记录?', deleteUser, [recordId], () => {

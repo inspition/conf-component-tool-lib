@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```js
-import { CommonSelect } from '@conf-tool/vue2-element'
+import { CommonSelect } from '@conf-component-tool-lib/vue2-element'
 ```
 
 ---

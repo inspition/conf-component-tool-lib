@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```js
-import { CommonCardList } from '@conf-tool/vue2-vant'
+import { CommonCardList } from '@conf-component-tool-lib/vue2-vant'
 ```
 
 ---

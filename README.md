@@ -15,8 +15,8 @@ conf-component-tool-lib 是一套基于配置驱动思想的 Vue 组件库 Monor
 ## 命名说明
 
 - 仓库根工程名是 conf-component-tool-lib（Monorepo 根目录，不作为 npm 发布包使用）。
-- 实际可安装和引用的是子包：@conf-tool/shared、@conf-tool/vue2-element、@conf-tool/vue3-element-plus、@conf-tool/vue2-vant。
-- 因此文档与示例里使用 @conf-tool/ 前缀是正确的。
+- 实际可安装和引用的是子包：@conf-component-tool-lib/shared、@conf-component-tool-lib/vue2-element、@conf-component-tool-lib/vue3-element-plus、@conf-component-tool-lib/vue2-vant。
+- 因此文档与示例里使用 @conf-component-tool-lib/ 前缀是正确的。
 
 ---
 
@@ -24,10 +24,10 @@ conf-component-tool-lib 是一套基于配置驱动思想的 Vue 组件库 Monor
 
 | 包名 | 说明 | UI 框架 |
 | ---- | ---- | -------- |
-| @conf-tool/shared | 共享工具函数（chainAccess、apiReq 等） | 无依赖 |
-| @conf-tool/vue2-element | Vue 2 配置化组件集合 | Element UI 2.x |
-| @conf-tool/vue3-element-plus | Vue 3 配置化组件集合 | Element Plus |
-| @conf-tool/vue2-vant | Vue 2 移动端配置化组件 | Vant 2.x |
+| @conf-component-tool-lib/shared | 共享工具函数（chainAccess、apiReq 等） | 无依赖 |
+| @conf-component-tool-lib/vue2-element | Vue 2 配置化组件集合 | Element UI 2.x |
+| @conf-component-tool-lib/vue3-element-plus | Vue 3 配置化组件集合 | Element Plus |
+| @conf-component-tool-lib/vue2-vant | Vue 2 移动端配置化组件 | Vant 2.x |
 
 ---
 
@@ -49,13 +49,13 @@ conf-component-tool-lib 是一套基于配置驱动思想的 Vue 组件库 Monor
 
 ```bash
 # Vue 2 + Element UI
-pnpm add @conf-tool/vue2-element
+pnpm add @conf-component-tool-lib/vue2-element
 
 # Vue 3 + Element Plus
-pnpm add @conf-tool/vue3-element-plus
+pnpm add @conf-component-tool-lib/vue3-element-plus
 
 # Vue 2 + Vant 移动端
-pnpm add @conf-tool/vue2-vant
+pnpm add @conf-component-tool-lib/vue2-vant
 ```
 
 ### 最简示例
@@ -66,7 +66,7 @@ pnpm add @conf-tool/vue2-vant
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 
 export default {
   components: { CommonTable },
@@ -112,6 +112,8 @@ pnpm build
 # 运行示例
 cd examples/vue2-demo && pnpm dev
 cd examples/vue3-demo && pnpm dev
+cd examples/vue2-vant-demo && pnpm dev
+cd examples/react-demo && pnpm dev
 
 # 新建子包
 node scripts/new-package.js
@@ -161,7 +163,9 @@ conf-component-tool-lib/
 │   └── vue2-vant/          # Vue 2 + Vant 移动端组件包
 ├── examples/
 │   ├── vue2-demo/          # Vue 2 示例项目
-│   └── vue3-demo/          # Vue 3 示例项目
+│   ├── vue3-demo/          # Vue 3 示例项目
+│   ├── vue2-vant-demo/     # Vue 2 + Vant 移动端示例
+│   └── react-demo/         # React 示例项目
 ├── docs/                   # 文档
 │   ├── MANUAL.md           # 操作手册
 │   ├── api/                # API 参考文档

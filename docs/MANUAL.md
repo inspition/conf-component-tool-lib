@@ -135,12 +135,12 @@ export default {
 
 ```bash
 # 按需安装对应包
-pnpm add @conf-tool/vue2-element    # Vue 2 + Element UI
-pnpm add @conf-tool/vue3-element-plus  # Vue 3 + Element Plus
-pnpm add @conf-tool/vue2-vant       # Vue 2 + Vant（移动端）
+pnpm add @conf-component-tool-lib/vue2-element    # Vue 2 + Element UI
+pnpm add @conf-component-tool-lib/vue3-element-plus  # Vue 3 + Element Plus
+pnpm add @conf-component-tool-lib/vue2-vant       # Vue 2 + Vant（移动端）
 
 # 共享工具库（各包已自动依赖）
-pnpm add @conf-tool/shared
+pnpm add @conf-component-tool-lib/shared
 ```
 
 ### Monorepo 开发
@@ -171,16 +171,16 @@ cd examples/vue3-demo && pnpm dev
 
 ```js
 // Vue 2 项目
-import { CommonTable, CommonSelect, CommonDescriptions } from '@conf-tool/vue2-element'
+import { CommonTable, CommonSelect, CommonDescriptions } from '@conf-component-tool-lib/vue2-element'
 
 // Vue 3 项目
-import { CommonTable, CommonSelect } from '@conf-tool/vue3-element-plus'
+import { CommonTable, CommonSelect } from '@conf-component-tool-lib/vue3-element-plus'
 
 // 移动端项目
-import { CommonCardList } from '@conf-tool/vue2-vant'
+import { CommonCardList } from '@conf-component-tool-lib/vue2-vant'
 
 // 共享工具
-import { chainAccess, getValue, itemFiledsMap } from '@conf-tool/shared'
+import { chainAccess, getValue, itemFiledsMap } from '@conf-component-tool-lib/shared'
 ```
 
 ---
@@ -195,7 +195,7 @@ import { chainAccess, getValue, itemFiledsMap } from '@conf-tool/shared'
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 
 export default {
   components: { CommonTable },

@@ -5,9 +5,9 @@
 ## 引入方式
 
 ```ts
-import { CommonTable } from '@conf-tool/vue3-element-plus'
+import { CommonTable } from '@conf-component-tool-lib/vue3-element-plus'
 // 或 TypeScript 版本
-import { CommonTableTs } from '@conf-tool/vue3-element-plus'
+import { CommonTableTs } from '@conf-component-tool-lib/vue3-element-plus'
 ```
 
 ---
@@ -124,7 +124,7 @@ defineExpose({ initData, search, restTableLayout })
 ```vue
 <script setup>
 import { ref } from 'vue'
-import CommonTable from '@conf-tool/vue3-element-plus'
+import CommonTable from '@conf-component-tool-lib/vue3-element-plus'
 
 const tableConf = ref({
   data: [
@@ -148,8 +148,8 @@ const tableConf = ref({
 ```vue
 <script lang="ts" setup>
 import { ref } from 'vue'
-import type { TableConf } from '@conf-tool/vue3-element-plus'
-import { CommonTableTs } from '@conf-tool/vue3-element-plus'
+import type { TableConf } from '@conf-component-tool-lib/vue3-element-plus'
+import { CommonTableTs } from '@conf-component-tool-lib/vue3-element-plus'
 import { fetchUsers } from '@/api/user'
 
 const tableData = ref<any[]>([])

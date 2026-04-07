@@ -9,8 +9,8 @@
   "dependencies": {
     "vue": "^2.7.16",
     "element-ui": "^2.15.14",
-    "@conf-tool/vue2-element": "workspace:*",
-    "@conf-tool/shared": "workspace:*"
+    "@conf-component-tool-lib/vue2-element": "workspace:*",
+    "@conf-component-tool-lib/shared": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue2": "^2.3.0",

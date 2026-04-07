@@ -1,6 +1,6 @@
-import { $downloadFile } from '@conf-tool/shared';
-import { $thenBack } from '@conf-tool/shared';
-import { AnyObject } from '@conf-tool/shared';
+import { $downloadFile } from '@conf-component-tool-lib/shared';
+import { $thenBack } from '@conf-component-tool-lib/shared';
+import { AnyObject } from '@conf-component-tool-lib/shared';
 import { default as CmTableDynamicColumn } from './components/CommonTable/cm-table-dynamic-column.vue';
 import { default as CommonDescriptions } from './components/CommonDescriptions/index.vue';
 import { default as CommonSelect } from './components/CommonSelect/index.vue';
@@ -57,6 +57,6 @@ export declare function $confirmReq(tip?: string, thenBack?: (res?: any) => null
  export { CommonTable }
 
 
- export * from "@conf-tool/shared";
+ export * from "@conf-component-tool-lib/shared";
 
  export { }
