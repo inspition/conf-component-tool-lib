@@ -1,6 +1,6 @@
 import { Toast as g } from "vant";
-import { $downloadFile as C, $thenBack as h, chainAccess as u } from "@conf-tool/shared";
-export * from "@conf-tool/shared";
+import { $downloadFile as C, $thenBack as h, chainAccess as u } from "@conf-component-tool-lib/shared";
+export * from "@conf-component-tool-lib/shared";
 function p(n = "") {
   return function(e) {
     const [t, s] = [
@@ -260,7 +260,7 @@ var y = function() {
   L,
   !1,
   null,
-  "a8c4ebb3"
+  "39dda630"
 );
 const B = v.exports;
 export {

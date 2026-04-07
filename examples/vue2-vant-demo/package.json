@@ -1,0 +1,19 @@
+{
+  "name": "vue2-vant-demo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vue": "^2.7.16",
+    "vant": "^2.12.0",
+    "@conf-component-tool-lib/vue2-vant": "workspace:*",
+    "@conf-component-tool-lib/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue2": "^2.3.0",
+    "vite": "^5.4.0"
+  }
+}

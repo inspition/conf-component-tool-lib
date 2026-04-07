@@ -112,6 +112,8 @@ pnpm build
 # 运行示例
 cd examples/vue2-demo && pnpm dev
 cd examples/vue3-demo && pnpm dev
+cd examples/vue2-vant-demo && pnpm dev
+cd examples/react-demo && pnpm dev
 
 # 新建子包
 node scripts/new-package.js
@@ -161,7 +163,9 @@ conf-component-tool-lib/
 │   └── vue2-vant/          # Vue 2 + Vant 移动端组件包
 ├── examples/
 │   ├── vue2-demo/          # Vue 2 示例项目
-│   └── vue3-demo/          # Vue 3 示例项目
+│   ├── vue3-demo/          # Vue 3 示例项目
+│   ├── vue2-vant-demo/     # Vue 2 + Vant 移动端示例
+│   └── react-demo/         # React 示例项目
 ├── docs/                   # 文档
 │   ├── MANUAL.md           # 操作手册
 │   ├── api/                # API 参考文档
