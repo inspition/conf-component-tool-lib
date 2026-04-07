@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 import { getUserList, removeUser } from '@/api/user'
-import { $confirmReq } from '@conf-tool/vue2-element'
+import { $confirmReq } from '@conf-component-tool-lib/vue2-element'
 
 export default {
   components: { CommonTable },
@@ -81,7 +81,7 @@ export default {
 </template>
 
 <script>
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 import { getEmployeeList } from '@/api/hr'
 
 // 状态标签渲染组件
@@ -159,8 +159,8 @@ export default {
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { CommonTableTs } from '@conf-tool/vue3-element-plus'
-import type { TableConf, ColumnDef } from '@conf-tool/vue3-element-plus'
+import { CommonTableTs } from '@conf-component-tool-lib/vue3-element-plus'
+import type { TableConf, ColumnDef } from '@conf-component-tool-lib/vue3-element-plus'
 import { getProjectList } from '@/api/project'
 
 const columns: ColumnDef[] = [
@@ -215,7 +215,7 @@ const tableConf = reactive<TableConf>({
 </template>
 
 <script>
-import { CommonCardList } from '@conf-tool/vue2-vant'
+import { CommonCardList } from '@conf-component-tool-lib/vue2-vant'
 import { getNoticeList } from '@/api/notice'
 
 export default {
@@ -282,7 +282,7 @@ export default {
 </template>
 
 <script>
-import { CommonDescriptions } from '@conf-tool/vue2-element'
+import { CommonDescriptions } from '@conf-component-tool-lib/vue2-element'
 import { getOrderDetail } from '@/api/order'
 
 const StatusRender = {
@@ -409,7 +409,7 @@ export default {
 </template>
 
 <script>
-import { CommonSelect } from '@conf-tool/vue2-element'
+import { CommonSelect } from '@conf-component-tool-lib/vue2-element'
 
 export default {
   components: { CommonSelect },

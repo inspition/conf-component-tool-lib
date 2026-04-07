@@ -1,5 +1,5 @@
 {
-  "name": "@conf-tool/vue2-vant",
+  "name": "@conf-component-tool-lib/vue2-vant",
   "version": "1.0.0",
   "description": "Vue2 + Vant 配置化组件",
   "type": "module",
@@ -19,7 +19,7 @@
     "dev": "vite build --watch"
   },
   "dependencies": {
-    "@conf-tool/shared": "workspace:*"
+    "@conf-component-tool-lib/shared": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^2.6.0 || ^2.7.0",

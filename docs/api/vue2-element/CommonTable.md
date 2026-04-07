@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```js
-import { CommonTable } from '@conf-tool/vue2-element'
+import { CommonTable } from '@conf-component-tool-lib/vue2-element'
 ```
 
 ---

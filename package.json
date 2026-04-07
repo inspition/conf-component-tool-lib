@@ -5,10 +5,10 @@
   "description": "配置化组件工具库 - Monorepo",
   "scripts": {
     "build": "pnpm -r --filter './packages/*' run build",
-    "build:shared": "pnpm --filter @conf-tool/shared run build",
-    "build:vue2-element": "pnpm --filter @conf-tool/vue2-element run build",
-    "build:vue2-vant": "pnpm --filter @conf-tool/vue2-vant run build",
-    "build:vue3-element-plus": "pnpm --filter @conf-tool/vue3-element-plus run build",
+    "build:shared": "pnpm --filter @conf-component-tool-lib/shared run build",
+    "build:vue2-element": "pnpm --filter @conf-component-tool-lib/vue2-element run build",
+    "build:vue2-vant": "pnpm --filter @conf-component-tool-lib/vue2-vant run build",
+    "build:vue3-element-plus": "pnpm --filter @conf-component-tool-lib/vue3-element-plus run build",
     "dev": "pnpm -r --filter './packages/*' run dev",
     "clean": "pnpm -r --filter './packages/*' exec rimraf dist",
     "new-package": "node scripts/new-package.js"

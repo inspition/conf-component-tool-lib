@@ -5,7 +5,7 @@ import {
   chainAccess,
   deepCopy,
   joinDebounce,
-} from '@conf-tool/shared'
+} from '@conf-component-tool-lib/shared'
 
 const App: React.FC = () => {
   const testData = {
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   return (
     <div style={{ padding: 24 }}>
-      <h1>React Demo - @conf-tool/shared 工具测试</h1>
+      <h1>React Demo - @conf-component-tool-lib/shared 工具测试</h1>
 
       <h2>chainAccess 链式访问</h2>
       <p>user.name: {name}</p>

@@ -1,6 +1,6 @@
-import { $downloadFile } from '@conf-tool/shared';
-import { $thenBack } from '@conf-tool/shared';
-import { AnyObject } from '@conf-tool/shared';
+import { $downloadFile } from '@conf-component-tool-lib/shared';
+import { $thenBack } from '@conf-component-tool-lib/shared';
+import { AnyObject } from '@conf-component-tool-lib/shared';
 import { default as CommonTable } from './components/CommonTable/index.vue';
 import { ComponentInstance } from 'vue';
 import { ComponentOptionsMixin } from 'vue';
@@ -221,6 +221,6 @@ declare type __VLS_WithTemplateSlots<T, S> = T & {
  }
 
 
- export * from "@conf-tool/shared";
+ export * from "@conf-component-tool-lib/shared";
 
  export { }

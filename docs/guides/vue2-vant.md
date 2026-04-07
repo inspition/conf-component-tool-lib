@@ -1,11 +1,11 @@
 # Vue 2 Vant 包 使用指南
 
-> `@conf-tool/vue2-vant` — 基于 Vant 的移动端配置化组件
+> `@conf-component-tool-lib/vue2-vant` — 基于 Vant 的移动端配置化组件
 
 ## 安装
 
 ```bash
-pnpm add @conf-tool/vue2-vant
+pnpm add @conf-component-tool-lib/vue2-vant
 ```
 
 **前置依赖**：
@@ -21,7 +21,7 @@ pnpm add @conf-tool/vue2-vant
 ## 引入方式
 
 ```js
-import { CommonCardList } from '@conf-tool/vue2-vant'
+import { CommonCardList } from '@conf-component-tool-lib/vue2-vant'
 ```
 
 ---
@@ -44,7 +44,7 @@ import { CommonCardList } from '@conf-tool/vue2-vant'
 </template>
 
 <script>
-import { CommonCardList } from '@conf-tool/vue2-vant'
+import { CommonCardList } from '@conf-component-tool-lib/vue2-vant'
 import { getOrderList } from '@/api/order'
 
 export default {

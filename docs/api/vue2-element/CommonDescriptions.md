@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```js
-import { CommonDescriptions } from '@conf-tool/vue2-element'
+import { CommonDescriptions } from '@conf-component-tool-lib/vue2-element'
 ```
 
 ---

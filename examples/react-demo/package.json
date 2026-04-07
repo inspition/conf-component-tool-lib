@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "@conf-tool/shared": "workspace:*"
+    "@conf-component-tool-lib/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",

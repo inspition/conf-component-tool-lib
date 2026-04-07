@@ -1,11 +1,11 @@
 # Vue 3 Element Plus 包 使用指南
 
-> `@conf-tool/vue3-element-plus` — 基于 Element Plus 的配置化组件集合
+> `@conf-component-tool-lib/vue3-element-plus` — 基于 Element Plus 的配置化组件集合
 
 ## 安装
 
 ```bash
-pnpm add @conf-tool/vue3-element-plus
+pnpm add @conf-component-tool-lib/vue3-element-plus
 ```
 
 **前置依赖**：
@@ -24,10 +24,10 @@ pnpm add @conf-tool/vue3-element-plus
 
 ```ts
 // 按需引入
-import { CommonTable, CommonTableTs, CommonSelect } from '@conf-tool/vue3-element-plus'
+import { CommonTable, CommonTableTs, CommonSelect } from '@conf-component-tool-lib/vue3-element-plus'
 
 // 工具函数
-import { apiReq, $confirmReq } from '@conf-tool/vue3-element-plus'
+import { apiReq, $confirmReq } from '@conf-component-tool-lib/vue3-element-plus'
 ```
 
 ---
@@ -47,7 +47,7 @@ import { apiReq, $confirmReq } from '@conf-tool/vue3-element-plus'
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { CommonTable } from '@conf-tool/vue3-element-plus'
+import { CommonTable } from '@conf-component-tool-lib/vue3-element-plus'
 
 const commonTable = ref(null)
 
@@ -104,8 +104,8 @@ commonTable.value.restTableLayout()
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { CommonTableTs } from '@conf-tool/vue3-element-plus'
-import type { TableConf } from '@conf-tool/vue3-element-plus'
+import { CommonTableTs } from '@conf-component-tool-lib/vue3-element-plus'
+import type { TableConf } from '@conf-component-tool-lib/vue3-element-plus'
 
 const tableConf = reactive<TableConf>({
   data: [],
@@ -176,7 +176,7 @@ interface TableConf {
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { CommonSelect } from '@conf-tool/vue3-element-plus'
+import { CommonSelect } from '@conf-component-tool-lib/vue3-element-plus'
 
 const value = ref('')
 
@@ -232,7 +232,7 @@ interface CmOptions {
 
 从 Vue 2 迁移到 Vue 3 时，`tableConf` 配置结构基本不变，调整点：
 
-1. **组件导入路径**改为 `@conf-tool/vue3-element-plus`
+1. **组件导入路径**改为 `@conf-component-tool-lib/vue3-element-plus`
 2. **Ref 访问**改为 Composition API 风格
 3. **分页参数**可能需要通过 `pageFiled` / `totalFiled` 配置字段名
 4. **v-on 绑定**需要确保 `tableConf.on` 不为 `undefined`（Vue 3 要求明确对象）

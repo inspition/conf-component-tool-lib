@@ -5,7 +5,7 @@
 ## 引入方式
 
 ```ts
-import { getValue, chainAccess, joinDebounce, ... } from '@conf-tool/shared'
+import { getValue, chainAccess, joinDebounce, ... } from '@conf-component-tool-lib/shared'
 ```
 
 ---

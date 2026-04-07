@@ -1,5 +1,5 @@
 {
-  "name": "@conf-tool/vue2-element",
+  "name": "@conf-component-tool-lib/vue2-element",
   "version": "1.0.0",
   "description": "Vue2 + Element UI 配置化组件",
   "type": "module",
@@ -19,7 +19,7 @@
     "dev": "vite build --watch"
   },
   "dependencies": {
-    "@conf-tool/shared": "workspace:*"
+    "@conf-component-tool-lib/shared": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^2.6.0 || ^2.7.0",

@@ -4,8 +4,8 @@ import {
   CommonTable,
   CommonTableTs,
   CommonSelect,
-} from '@conf-tool/vue3-element-plus'
-import type { TableConf } from '@conf-tool/vue3-element-plus'
+} from '@conf-component-tool-lib/vue3-element-plus'
+import type { TableConf } from '@conf-component-tool-lib/vue3-element-plus'
 
 const selectValue = ref('')
 const selectData = ref([

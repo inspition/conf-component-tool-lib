@@ -11,7 +11,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'mjs' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['vue', 'element-ui', '@conf-tool/shared'],
+      external: ['vue', 'element-ui', '@conf-component-tool-lib/shared'],
       output: {
         globals: {
           vue: 'Vue',

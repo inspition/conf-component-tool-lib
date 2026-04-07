@@ -39,7 +39,7 @@ if (!validFrameworks.includes(framework)) {
 }
 
 // ==================== 模板配置 ====================
-const pkgName = `@conf-tool/${name}`
+const pkgName = `@conf-component-tool-lib/${name}`
 const pkgDir = path.resolve(__dirname, '..', 'packages', name)
 
 if (fs.existsSync(pkgDir)) {
@@ -228,7 +228,7 @@ writeFile(
         dev: 'vite build --watch',
       },
       dependencies: {
-        '@conf-tool/shared': 'workspace:*',
+        '@conf-component-tool-lib/shared': 'workspace:*',
       },
       peerDependencies: config.peerDeps,
       devDependencies: config.devDeps,
@@ -251,7 +251,7 @@ writeFile(
         declarationDir: './dist',
         ...config.tsconfig,
         paths: {
-          '@conf-tool/shared': ['../shared/src'],
+          '@conf-component-tool-lib/shared': ['../shared/src'],
         },
       },
       include: config.includes,
@@ -294,7 +294,7 @@ const sampleExport = isReact
 
 writeFile(
   path.join(pkgDir, 'src', 'index.ts'),
-  `${sampleExport}\nexport * from '@conf-tool/shared'\n`
+  `${sampleExport}\nexport * from '@conf-component-tool-lib/shared'\n`
 )
 
 // Sample component

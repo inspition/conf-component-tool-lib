@@ -1,6 +1,6 @@
-import { $downloadFile } from '@conf-tool/shared';
-import { $thenBack } from '@conf-tool/shared';
-import { AnyObject } from '@conf-tool/shared';
+import { $downloadFile } from '@conf-component-tool-lib/shared';
+import { $thenBack } from '@conf-component-tool-lib/shared';
+import { AnyObject } from '@conf-component-tool-lib/shared';
 import { default as CommonCardList } from './components/CommonCardList/index.vue';
 
 /**
@@ -28,6 +28,6 @@ export declare const apiTools: {
 export { CommonCardList }
 
 
-export * from "@conf-tool/shared";
+export * from "@conf-component-tool-lib/shared";
 
 export { }

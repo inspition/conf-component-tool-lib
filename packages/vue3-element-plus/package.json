@@ -1,5 +1,5 @@
 {
-  "name": "@conf-tool/vue3-element-plus",
+  "name": "@conf-component-tool-lib/vue3-element-plus",
   "version": "1.0.0",
   "description": "Vue3 + Element Plus 配置化组件",
   "type": "module",
@@ -19,7 +19,7 @@
     "dev": "vite build --watch"
   },
   "dependencies": {
-    "@conf-tool/shared": "workspace:*"
+    "@conf-component-tool-lib/shared": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.3.0",
