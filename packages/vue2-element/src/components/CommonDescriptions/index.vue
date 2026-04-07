@@ -1,5 +1,12 @@
 <template>
   <div class="common-descriptions" v-loading="isLoading">
+    <!-- <cm-header
+      v-if="calcTitle"
+      @title-click="$emit('title-click', $event)"
+      :icon="tableConf.icon"
+      :title="calcTitle"
+    /> -->
+
     <table class="desc_tb">
       <tbody>
         <tr
@@ -12,6 +19,7 @@
               {{ td.label }}
             </th>
             <td :key="i + '-td-' + i2" class="tb-info" v-bind="td.attrs_info">
+              <!-- render || JSX -->
               <component
                 v-if="td.render"
                 :is="td.render"
@@ -19,8 +27,7 @@
                 :dataParent="tableConf.data"
                 :conf="td"
               ></component>
-
-              <div
+              <!-- richText -->              <div
                 v-else-if="td.v_html"
                 v-html="getPropVal(td)"
                 class="td-richText"
@@ -42,12 +49,37 @@ import { apiTools, chainAccess, getValue } from '../../tools'
 
 export default {
   name: 'CommonDescriptions',
+  // components: { CmHeader },
   props: {
     headTitle: [String, Array],
     tableConf: {
       type: Object,
       default() {
-        return {}
+        return {
+          // headTitle: '客户基本信息',
+          // icon: require('@/assets/img/u1130.png'),
+          // data: {},
+          // requester: {
+          //   params: [1, 10],
+          //   api: () => Promise.resolve(),
+          //   path: "", // 接口返回后数据解析路径
+          //   getter: () => null, // 返回数据过滤方法
+          // },
+          // trList: [
+          //   {
+          //     tdList: [
+          //       { label: '客户名称', prop: '重庆高安安建筑劳务有限公司' },
+          //       { label: '客户编号', prop: 'P0001' }
+          //     ]
+          //   },
+          //   {
+          //     tdList: [
+          //       { label: '异常状态', prop: '本金逾期' },
+          //       { label: '信用评级', prop: '13级' }
+          //     ]
+          //   },
+          // ]
+        }
       },
     },
   },
@@ -88,6 +120,13 @@ export default {
 
       this.isLoading = false
     },
+    /**
+     * 解析数据
+     *
+     * @param   {[type]}  res  [res description]
+     *
+     * @return  {[type]}       [return description]
+     */
     decodeData(res) {
       const { getter, path } = this.tableConf.requester ?? {}
       const decode = path ? chainAccess(res, path) : res
@@ -95,12 +134,25 @@ export default {
 
       return data
     },
+    /**
+     * 计算单元格内容
+     */
     calcText(td = {}) {
       const { text, prop, formatter = () => {} } = td
       const FieldVal = this.$get(() => this.tableConf.data[prop], '')
 
-      return formatter(FieldVal) || FieldVal || '--'
+      return (
+        // 定制格式
+        formatter(FieldVal) ||
+        // 字段值
+        FieldVal ||
+        // 默认文本
+        '--'
+      )
     },
+    /**
+     * 获取字段值
+     */
     getPropVal({ prop = '' } = {}) {
       const val = this.$get(() => this.tableConf.data[prop])
       return val

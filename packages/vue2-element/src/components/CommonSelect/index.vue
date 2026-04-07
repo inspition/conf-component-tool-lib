@@ -38,6 +38,9 @@ export default {
         return []
       },
     },
+    /**
+     * 配置项
+     */
     options: {
       type: Object,
       default() {
@@ -46,7 +49,11 @@ export default {
           value: 'value',
           path: '',
           api: () => Promise.resolve([]),
+
+          // 远程搜索参数加工函数
           searchParams: (query) => query,
+
+          // 自定义值更新回调
           customChange: (e, list) => e,
         }
       },
@@ -57,6 +64,9 @@ export default {
         return []
       },
     },
+    /**
+     * el-select API覆盖
+     */
     bind: {
       type: Object,
       default() {
@@ -72,6 +82,11 @@ export default {
     },
   },
   computed: {
+    /**
+     * 合并传入的Options与默认配置
+     *
+     * @return  {[type]}  [return description]
+     */
     dynamicOptions() {
       return { ...defaultOptions, ...this.options }
     },

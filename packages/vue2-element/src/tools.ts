@@ -5,6 +5,7 @@ export * from '@conf-tool/shared'
 
 /**
  * API catch回调处理 (Element UI)
+ * @param {String} errPrefix  [自定义错误前缀]
  */
 export function $catchBack(errPrefix = '') {
   return function (err: AnyObject) {
@@ -21,6 +22,9 @@ export function $catchBack(errPrefix = '') {
 
 /**
  * 接口请求封装
+ *
+ * @param {T} api [接口]
+ * @returns {args<T><ReturnType><T> | undefined} return description
  */
 export function apiReq<T extends (...args: any[]) => any>(
   api: T,
@@ -33,6 +37,8 @@ export function apiReq<T extends (...args: any[]) => any>(
 
 /**
  * 请求提交定制确认
+ * @param {String} tip  [确认提示语]
+ * @param {Function} thenBack  [确认后执行回调]
  */
 export async function $confirmReq(tip = '', thenBack = (res?: any) => null) {
   await MessageBox.confirm(tip, '提示', {
@@ -45,6 +51,10 @@ export async function $confirmReq(tip = '', thenBack = (res?: any) => null) {
 
 /**
  * 文件异常检测
+ *
+ * @param   {[type]}  fileBlob  [fileBlob description]
+ *
+ * @return  {[Boolean]}        是否异常
  */
 export async function checkFileCatch(fileBlob = new Blob()) {
   const text = await fileBlob?.text?.()

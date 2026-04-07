@@ -9,6 +9,8 @@ export function random(min: number, max: number): number {
  *
  * @param   {Function}   fn            [于函数中返回的取值对象]
  * @param   {any}  defaultValue  [可选默认返回值]
+ *
+ * @return  {[type]}                   [return description]
  */
 export function getValue(fn: () => any, defaultValue?: any) {
   try {
@@ -28,6 +30,7 @@ export function getValue(fn: () => any, defaultValue?: any) {
  * 链式访问器
  * @param {Any} result  [访问对象]
  * @param {String} path [访问链地址，例：'data.pageInfo.list.0']
+ * @return {Any}
  */
 export function chainAccess(result: AnyObject, path: string) {
   const aPath = path.split('.')
@@ -40,6 +43,8 @@ export function chainAccess(result: AnyObject, path: string) {
 
 /**
  * 防抖
+ *
+ * @return  {[Function]}     [return 防抖加工后的新方法]
  */
 export function joinDebounce() {
   let timer: ReturnType<typeof setTimeout>
@@ -52,6 +57,10 @@ export function joinDebounce() {
 
 /**
  * 生成并行异步请求列表
+ *
+ * @param   {[Promise]}  apis  [Promise.all([...])]
+ *
+ * @return  {[Promise]}        [return description]
  */
 export function genrateParallels(apis: any[]) {
   const parallels = apis.map((api) => (async () => await api)())
@@ -60,6 +69,7 @@ export function genrateParallels(apis: any[]) {
 
 /**
  * API then回调处理
+ * @param {Object} res  [resolve参数]
  */
 export function $thenBack(res: AnyObject) {
   const data = res?.data
@@ -72,6 +82,9 @@ export function $thenBack(res: AnyObject) {
 
 /**
  * 文件下载
+ *
+ * @param   {[AnyObject]}  res  接口回调
+ * @param   {string}     fileNameKey  下载文件键名
  */
 export function $downloadFile(res: AnyObject, fileNameKey?: string) {
   const { data, headers } = res || {}
