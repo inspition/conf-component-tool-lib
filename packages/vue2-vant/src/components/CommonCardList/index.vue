@@ -57,6 +57,7 @@
             >
               <component
                 v-bind="combBindProps(operation.bind, val)"
+                v-on="operation.on"
                 :is="operation.render"
               />
             </van-row>
@@ -104,7 +105,7 @@ export default {
             pageSizeProp: 'size',
             // list路径
             path: '',
-            paramGetter: (params) => params,
+            paramGetter: params => params,
             // 分页体路径
             pageInfoPath: '',
             // 总条目字段
@@ -115,7 +116,7 @@ export default {
             // 分页递进回调
             incrementPageNo: () => null,
             api: () =>
-              new Promise((resolve) => setTimeout(() => resolve([]), 1500)),
+              new Promise(resolve => setTimeout(() => resolve([]), 1500)),
           },
           refreshConf: {
             isLoading: false,
@@ -292,14 +293,11 @@ export default {
       } = listConf
       const total = getTotal(pageInfo)
 
-      if (
-        (hasPagination && data.length >= total) ||
-        !hasPagination ||
-        !result
-      )
+      if ((hasPagination && data.length >= total) || !hasPagination || !result)
         bind.finished = true
 
-      if (hasPagination && data.length < total) handleIncrement({ params: listConf.requester.params, result, pageInfo })
+      if (hasPagination && data.length < total)
+        handleIncrement({ params: listConf.requester.params, result, pageInfo })
     },
     /**
      * 获取总条数，默认读取 requester.pageInfoTotalProp 字段
