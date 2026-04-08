@@ -130,6 +130,7 @@ export default {
           // 操作栏
           operation: {
             // bind: {},
+            // on: {},
             // render: {}
           },
           bind: {
