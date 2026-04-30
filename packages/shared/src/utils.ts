@@ -33,13 +33,26 @@ export function getValue(fn: () => any, defaultValue?: any) {
  * @return {Any}
  */
 export function chainAccess(result: AnyObject, path: string) {
-  const aPath = path.split('.')
-  let newRes = result?.[aPath?.shift?.() || '']
+  const [first, ...aPath] = [...path.split('.')]
+  let temp = result?.[first]
+  let index = 0
 
-  if (aPath.length && newRes) newRes = chainAccess(newRes, aPath.join('.'))
+  while (index < aPath.length && temp) {
+    const key = aPath[index]
+    temp = temp?.[key]
+    index++
+  }
 
-  return newRes
+  return temp
 }
+// export function chainAccess(result: AnyObject, path: string) {
+//   const aPath = path.split('.')
+//   let newRes = result?.[aPath?.shift?.() || '']
+
+//   if (aPath.length && newRes) newRes = chainAccess(newRes, aPath.join('.'))
+
+//   return newRes
+// }
 
 /**
  * 防抖
@@ -63,7 +76,7 @@ export function joinDebounce() {
  * @return  {[Promise]}        [return description]
  */
 export function genrateParallels(apis: any[]) {
-  const parallels = apis.map((api) => (async () => await api)())
+  const parallels = apis.map(api => (async () => await api)())
   return parallels
 }
 
@@ -179,7 +192,7 @@ export function deepCopy(data: any) {
     copy = {}
   } else if (dataType.includes(Function.name)) {
     return
-  } else if (valTypes.some((t) => dataType.includes(t))) {
+  } else if (valTypes.some(t => dataType.includes(t))) {
     return data
   } else {
     copy = {}
