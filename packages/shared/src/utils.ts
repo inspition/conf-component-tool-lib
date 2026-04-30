@@ -33,7 +33,7 @@ export function getValue(fn: () => any, defaultValue?: any) {
  * @return {Any}
  */
 export function chainAccess(result: AnyObject, path: string) {
-  const [first, ...aPath] = [...path.split('.')]
+  const [first, ...aPath] = [...(path.split('.') ?? [])]
   let temp = result?.[first]
   let index = 0
 
